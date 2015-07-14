@@ -37,12 +37,13 @@ class SendEmailTask(Task):
         :param str message: The body of the message.
         """
         self._open_ses_conn()
+        source = settings.AWS_SES_RETURN_PATH
         try:
             # We use the send_raw_email func here because the Django
             # EmailMessage object we got these values from constructs all of
             # the headers and such.
             self.connection.send_raw_email(
-                source=from_email,
+                source=source or message.from_email,
                 destinations=recipients,
                 raw_message=dkim_sign(message),
             )
