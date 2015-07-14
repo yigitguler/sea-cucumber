@@ -43,7 +43,7 @@ class SendEmailTask(Task):
             # EmailMessage object we got these values from constructs all of
             # the headers and such.
             self.connection.send_raw_email(
-                source=source or message.from_email,
+                source=source or from_email,
                 destinations=recipients,
                 raw_message=dkim_sign(message),
             )
